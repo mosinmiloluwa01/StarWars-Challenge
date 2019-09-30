@@ -2,26 +2,30 @@
 import axios from 'axios';
 import models from '<models>';
 
-const { Film } = models;
+const { Film, Character } = models;
 
-const findOrCreateDBData = async (url, model) => {
+const createDBData = async (url, model, type) => {
+  let data;
   try {
-    const movieList = await axios.get(url);
-    const { results } = movieList.data;
+    const resData = await axios.get(url);
+    const { results } = resData.data;
 
-    results.map((movie) => {
-      const { title, opening_crawl, release_date } = movie;
-      const data = { title, opening_crawl, release_date };
+    results.map((result) => {
+      if (type === 'casts') {
+        const { name, height, gender } = result;
+        data = { name, height, gender };
+        model.create(data);
+        return;
+      }
+      const { title, opening_crawl, release_date } = result;
+      data = { title, opening_crawl, release_date };
 
-      model.findOrCreate({
-        where: { title },
-        defaults: data
-      });
-      return '';
+      model.create(data);
     });
   } catch (error) {
     console.log(error.message);
   }
 };
 
-findOrCreateDBData('https://swapi.co/api/films', Film);
+createDBData('https://swapi.co/api/films', Film, 'movies');
+createDBData('https://swapi.co/api/people', Character, 'casts');

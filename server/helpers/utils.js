@@ -1,13 +1,15 @@
-const displayMessage = (
-  res, statusCode, message, data, success = true
-) => {
-  const payload = success === true ? 'data' : 'error';
+export const displayMessage = (res, statusCode, dataObject) => res.status(statusCode).json({
+  status: statusCode < 300 ? 'success' : 'error',
+  ...dataObject,
+});
 
-  return res.status(statusCode).json({
-    status: success === true ? 'success' : 'error',
-    message,
-    [payload]: data
-  });
+export const getSumOfHeights = (data) => data.reduce(
+  (sum, actor) => sum + actor.dataValues.height, 0
+);
+
+export const convertToFeet = (heightInCM) => {
+  const heightInFeet = ((heightInCM * 0.393700) / 12);
+  const feet = Math.floor(heightInFeet);
+  const inches = ((heightInFeet - feet) * 12).toFixed(2);
+  return `${feet}ft ${inches}inches`;
 };
-
-export default displayMessage;

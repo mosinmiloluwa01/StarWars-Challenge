@@ -18,6 +18,15 @@ const character = (sequelize, DataTypes) => {
           msg: 'height is required.'
         }
       }
+    },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: {
+          msg: 'gender is required.'
+        }
+      }
     }
   }, {});
   Character.associate = () => {};
