@@ -31,7 +31,7 @@ const film = (sequelize, DataTypes) => {
   Film.associate = (models) => {
     Film.hasMany(models.Comment, {
       foreignKey: 'film_id',
-      target: 'id',
+      as: 'comments',
     });
   };
   return Film;
