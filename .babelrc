@@ -15,7 +15,10 @@
         "alias": {
           "<server>": "./server",
           "<models>": "./server/models",
-          "<configs>": "./server/configs"
+          "<configs>": "./server/configs",
+          "<controllers>": "./server/controllers",
+          "<helpers>": "./server/helpers",
+          "<services>": "./server/services",
         }
       }
     ]
