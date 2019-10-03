@@ -19,7 +19,7 @@
           "<controllers>": "./server/controllers",
           "<helpers>": "./server/helpers",
           "<services>": "./server/services",
-          "<validations>": "./server/validations"
+          "<middlewares>": "./server/middlewares"
         }
       }
     ]
