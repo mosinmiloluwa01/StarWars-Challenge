@@ -1,6 +1,6 @@
 import express from 'express';
 import getMovieCasts from '<controllers>/movieCasts';
-import validateCastParams from '<validations>/casts';
+import validateCastParams from '<middlewares>/validations/casts';
 
 const casts = express.Router();
 

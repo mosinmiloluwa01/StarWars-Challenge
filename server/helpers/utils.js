@@ -1,3 +1,5 @@
+import requestIp from 'request-ip';
+
 export const displayMessage = (res, statusCode, dataObject) => res.status(statusCode).json({
   status: statusCode < 300 ? 'success' : 'error',
   ...dataObject,
@@ -13,3 +15,17 @@ export const convertToFeet = (heightInCM) => {
   const inches = ((heightInFeet - feet) * 12).toFixed(2);
   return `${feet}ft ${inches}inches`;
 };
+
+export const validateInput = ({
+  schema, data, next, res
+}) => {
+  const { error } = schema.validate(data);
+  const validationStatus = error || true;
+
+  if (validationStatus !== true) {
+    return displayMessage(res, 400, { message: 'validation error', error: validationStatus });
+  }
+  next();
+};
+
+export const requestClientIp = (req) => requestIp.getClientIp(req);
