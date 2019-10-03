@@ -29,3 +29,5 @@ export const validateInput = ({
 };
 
 export const requestClientIp = (req) => requestIp.getClientIp(req);
+
+export const toUtcFormat = (date) => new Date(date).toUTCString();

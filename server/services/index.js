@@ -56,3 +56,21 @@ export const createAComment = async (data) => {
     console.log(error.message);
   }
 };
+
+export const getCommentsByFilmId = async (id) => {
+  try {
+    const comment = await Comment.findAll({
+      attributes: ['comment', 'ip_address', 'createdAt'],
+      where: { film_id: id },
+      include: [{
+        model: Film,
+        as: 'film',
+        attributes: ['title'],
+      }],
+      order: [['createdAt', 'DESC']]
+    });
+    return comment;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
