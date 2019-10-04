@@ -2,7 +2,7 @@ import Joi from '@hapi/joi';
 import { validateInput } from '<helpers>/utils';
 
 export const validateCommentInput = (req, res, next) => {
-  const schema = Joi.object({ comment: Joi.string().required().min(2) });
+  const schema = Joi.object({ comment: Joi.string().pattern(/[a-z0-9]{2,}/i).required().min(2) });
   return validateInput(
     {
       schema, data: req.body, next, res
@@ -10,7 +10,7 @@ export const validateCommentInput = (req, res, next) => {
   );
 };
 
-export const validateCommentParams = (req, res, next) => {
+export const validateParams = (req, res, next) => {
   const schema = Joi.object({ id: Joi.number().positive().min(1).required() });
   return validateInput(
     {

@@ -1,6 +1,7 @@
+/* eslint-disable camelcase */
 import models from '<models>';
 
-const { Film, Comment, Character } = models;
+const { Film, Comment, Character, FilmCharacter } = models;
 
 export const getMovies = async () => {
   try {
@@ -25,15 +26,20 @@ export const getMovies = async () => {
   }
 };
 
-export const getCasts = async (gender, sortParams) => {
+export const getCasts = async (gender, sortParams, film_id) => {
   try {
-    const movieCasts = await Character.findAll({
-      attributes: ['name', 'height', 'gender'],
-      where: { gender },
-      order: [[`${sortParams}`]]
+    const casts = await FilmCharacter.findAll({
+      attributes: [],
+      where: { film_id },
+      include: [{
+        model: Character,
+        where: { gender },
+        attributes: ['name', 'height', 'gender'],
+        order: [[`${sortParams}`]]
+      }],
     });
-
-    return movieCasts;
+    const formattedCasts = casts.map((cast) => cast.Character);
+    return formattedCasts;
   } catch (error) {
     console.log(error.message);
   }
