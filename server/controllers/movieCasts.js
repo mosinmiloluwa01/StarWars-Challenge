@@ -3,7 +3,7 @@ import { getCasts } from '<services>';
 
 const getMovieCasts = async (req, res) => {
   try {
-    const movieCasts = await getCasts(req.params.gender, req.query.sortParams);
+    const movieCasts = await getCasts(req.params.gender, req.query.sortParams, req.params.id);
     const sumOfHeightsInCM = await getSumOfHeights(movieCasts);
     const sumOfHeightsInFeet = convertToFeet(sumOfHeightsInCM);
 

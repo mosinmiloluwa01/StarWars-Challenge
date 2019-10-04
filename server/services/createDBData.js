@@ -2,30 +2,31 @@
 import axios from 'axios';
 import models from '<models>';
 
-const { Film, Character } = models;
+const { Film, Character, FilmCharacter } = models;
 
-const createDBData = async (url, model, type) => {
-  let data;
+const createDBData = async () => {
   try {
-    const resData = await axios.get(url);
-    const { results } = resData.data;
+    const { data: { results: movieData } } = await axios.get('https://swapi.co/api/films');
 
-    results.map((result) => {
-      if (type === 'casts') {
-        const { name, height, gender } = result;
-        data = { name, height, gender };
-        model.create(data);
-        return;
-      }
-      const { title, opening_crawl, release_date } = result;
-      data = { title, opening_crawl, release_date };
+    movieData.forEach(async (result) => {
+      const { title, opening_crawl, release_date, characters } = result;
+      const movies = { title, opening_crawl, release_date };
 
-      model.create(data);
+      const { id: filmId } = await Film.create(movies);
+      characters.forEach(async (character) => {
+        const data = await axios.get(character);
+        const { name, height, gender } = data.data;
+        const characterData = { name, height: height === 'unknown' ? 0 : height, gender };
+        const [{ id: characterId }] = await Character.findOrCreate({
+          where: { ...characterData },
+          defaults: characterData
+        });
+        await FilmCharacter.create({ film_id: filmId, character_id: characterId });
+      });
     });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
-createDBData('https://swapi.co/api/films', Film, 'movies');
-createDBData('https://swapi.co/api/people', Character, 'casts');
+createDBData();

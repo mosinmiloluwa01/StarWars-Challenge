@@ -6,7 +6,7 @@ export const displayMessage = (res, statusCode, dataObject) => res.status(status
 });
 
 export const getSumOfHeights = (data) => data.reduce(
-  (sum, actor) => sum + actor.dataValues.height, 0
+  (sum, actor) => sum + actor.height, 0
 );
 
 export const convertToFeet = (heightInCM) => {

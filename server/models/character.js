@@ -29,7 +29,11 @@ const character = (sequelize, DataTypes) => {
       }
     }
   }, {});
-  Character.associate = () => {};
+  Character.associate = (models) => {
+    Character.hasMany(models.FilmCharacter, {
+      foreignKey: 'character_id',
+    });
+  };
   return Character;
 };
 

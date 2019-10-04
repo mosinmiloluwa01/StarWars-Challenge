@@ -33,6 +33,9 @@ const film = (sequelize, DataTypes) => {
       foreignKey: 'film_id',
       as: 'comments',
     });
+    Film.hasMany(models.FilmCharacter, {
+      foreignKey: 'film_id',
+    });
   };
   return Film;
 };
