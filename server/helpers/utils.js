@@ -1,7 +1,7 @@
 import requestIp from 'request-ip';
 
 export const displayMessage = (res, statusCode, dataObject) => res.status(statusCode).json({
-  status: statusCode < 300 ? 'success' : 'error',
+  status: statusCode < 200 ? 'ok' : (statusCode < 300 ? 'success' : 'error'),
   ...dataObject,
 });
 
@@ -23,7 +23,7 @@ export const validateInput = ({
   const validationStatus = error || true;
 
   if (validationStatus !== true) {
-    return displayMessage(res, 400, { message: 'validation error', error: validationStatus });
+    return displayMessage(res, 400, { message: 'validation error', error: validationStatus.details });
   }
   next();
 };

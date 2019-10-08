@@ -6,7 +6,7 @@ const { Film, Comment, Character, FilmCharacter } = models;
 export const getMovies = async () => {
   try {
     const films = await Film.findAll({
-      attributes: ['title', 'opening_crawl', 'release_date'],
+      attributes: ['id', 'title', 'opening_crawl', 'release_date'],
       include: [{
         model: Comment,
         as: 'comments',
@@ -28,16 +28,18 @@ export const getMovies = async () => {
 
 export const getCasts = async (gender, sortParams, film_id) => {
   try {
-    const casts = await FilmCharacter.findAll({
+    const sort = sortParams || 'name';
+    const query = {
       attributes: [],
       where: { film_id },
       include: [{
         model: Character,
-        where: { gender },
-        attributes: ['name', 'height', 'gender'],
-        order: [[`${sortParams}`]]
+        attributes: ['id', 'name', 'height', 'gender'],
       }],
-    });
+      order: [[Character, sort]]
+    };
+    if (gender) query.include[0].where = { gender };
+    const casts = await FilmCharacter.findAll(query);
     const formattedCasts = casts.map((cast) => cast.Character);
     return formattedCasts;
   } catch (error) {
@@ -66,13 +68,8 @@ export const createAComment = async (data) => {
 export const getCommentsByFilmId = async (id) => {
   try {
     const comment = await Comment.findAll({
-      attributes: ['comment', 'ip_address', 'createdAt'],
+      attributes: ['id', 'comment', 'ip_address', 'createdAt'],
       where: { film_id: id },
-      include: [{
-        model: Film,
-        as: 'film',
-        attributes: ['title'],
-      }],
       order: [['createdAt', 'DESC']]
     });
     return comment;
