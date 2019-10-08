@@ -10,15 +10,14 @@ https://starwars-challenge-app.herokuapp.com
 `GET` https://starwars-challenge-app.herokuapp.com/api/v1/movies
 
 #### Get Casts per movie
-`GET` https://starwars-challenge-app.herokuapp.com/api/v1/casts/2/:gender?sortParams=name
-`sortParams` can also be gender or height
+`GET` https://starwars-challenge-app.herokuapp.com/api/v1/movies/:id/casts
 
 #### Post A Comment
-`POST` https://starwars-challenge-app.herokuapp.com/api/v1/comments/:id
+`POST` https://starwars-challenge-app.herokuapp.com/api/v1/movies/:id/comments
 `id` refers to `movieId`
 
 #### Get Comments per movie
-`GET` https://starwars-challenge-app.herokuapp.com/api/v1/comments/:id
+`GET` https://starwars-challenge-app.herokuapp.com/api/v1/movies/:id/comments
 `id` refers to `movieId`
 
 ## Tools used for Development
