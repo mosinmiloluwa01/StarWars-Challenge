@@ -16,7 +16,11 @@ const createDBData = async () => {
       characters.forEach(async (character) => {
         const data = await axios.get(character);
         const { name, height, gender } = data.data;
-        const characterData = { name, height: height === 'unknown' ? 0 : height, gender };
+        const characterData = {
+          name,
+          height: height === 'unknown' ? 0 : height,
+          gender: gender === 'n/a' ? 'unknown' : gender,
+        };
         const [{ id: characterId }] = await Character.findOrCreate({
           where: { ...characterData },
           defaults: characterData

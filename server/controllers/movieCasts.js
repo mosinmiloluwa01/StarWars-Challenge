@@ -3,7 +3,7 @@ import { getCasts } from '<services>';
 
 const getMovieCasts = async (req, res) => {
   try {
-    const movieCasts = await getCasts(req.params.gender, req.query.sortParams, req.params.id);
+    const movieCasts = await getCasts(req.query.gender, req.query.sortParams, req.params.id);
     const sumOfHeightsInCM = await getSumOfHeights(movieCasts);
     const sumOfHeightsInFeet = convertToFeet(sumOfHeightsInCM);
 
@@ -12,7 +12,10 @@ const getMovieCasts = async (req, res) => {
       data: movieCasts,
       metaData: {
         characterCount: movieCasts.length,
-        totalHeight: `${sumOfHeightsInCM}cm makes ${sumOfHeightsInFeet}`
+        totalHeight: {
+          cm: sumOfHeightsInCM,
+          inches: sumOfHeightsInFeet
+        }
       },
     };
     return displayMessage(res, 200, data);

@@ -38,7 +38,6 @@ export const getComments = async (req, res) => {
     }
 
     comments.forEach((comment) => {
-      comment.dataValues.comment = comment.dataValues.comment.substring(0, 500);
       comment.dataValues.createdAt = toUtcFormat(comment.dataValues.createdAt);
     });
 
