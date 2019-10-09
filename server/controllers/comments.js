@@ -18,7 +18,7 @@ export const createComment = async (req, res) => {
 
     const comment = await createAComment(data);
 
-    return displayMessage(res, 200, { message: 'comment created', data: comment });
+    return displayMessage(res, 201, { message: 'comment created', data: comment });
   } catch (error) {
     return displayMessage(res, 500, { message: 'server error', error: error.message });
   }
