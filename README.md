@@ -11,7 +11,7 @@ https://starwars-challenge-app.herokuapp.com
 
 #### Get Casts per movie
 `GET` https://starwars-challenge-app.herokuapp.com/api/v1/movies/:id/casts
-#####N.B 
+##### N.B 
 this endpoint accepts `sortParams`, `gender` and `order` as query params.
 `sortParams` refers to a parameter to be used to sort data (sortParams can only be one of the following: name,gender or height )
 `order` refers if you are sorting in asceding or descending order
