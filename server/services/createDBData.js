@@ -19,7 +19,7 @@ const createDBData = async () => {
         const characterData = {
           name,
           height: height === 'unknown' ? 0 : height,
-          gender: gender === 'n/a' ? 'unknown' : gender,
+          gender,
         };
         const [{ id: characterId }] = await Character.findOrCreate({
           where: { ...characterData },
@@ -29,7 +29,7 @@ const createDBData = async () => {
       });
     });
   } catch (error) {
-    console.log(error);
+    throw error.message;
   }
 };
 

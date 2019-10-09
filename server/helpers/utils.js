@@ -1,4 +1,5 @@
 import requestIp from 'request-ip';
+import { isContext } from 'vm';
 
 export const displayMessage = (res, statusCode, dataObject) => res.status(statusCode).json({
   status: statusCode < 200 ? 'ok' : (statusCode < 300 ? 'success' : 'error'),
@@ -19,11 +20,15 @@ export const convertToFeet = (heightInCM) => {
 export const validateInput = ({
   schema, data, next, res
 }) => {
+  const errors = [];
   const { error } = schema.validate(data);
   const validationStatus = error || true;
 
   if (validationStatus !== true) {
-    return displayMessage(res, 400, { message: 'validation error', error: validationStatus.details });
+    validationStatus.details.forEach((err) => {
+      errors.push(err.message);
+    });
+    return displayMessage(res, 400, { message: 'validation error', errors });
   }
   next();
 };

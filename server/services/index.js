@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 /* eslint-disable camelcase */
 import models from '<models>';
 
@@ -22,28 +23,29 @@ export const getMovies = async () => {
 
     return films;
   } catch (error) {
-    console.log(error.message);
+    throw error;
   }
 };
 
-export const getCasts = async (gender, sortParams, film_id) => {
+export const getCasts = async ({ gender, sortParams, id, order }) => {
   try {
     const sort = sortParams || 'name';
+    const sortOrder = order ? order.toUpperCase() : 'ASC';
     const query = {
       attributes: [],
-      where: { film_id },
+      where: { film_id: id },
       include: [{
         model: Character,
         attributes: ['id', 'name', 'height', 'gender'],
       }],
-      order: [[Character, sort]]
+      order: [[Character, sort, sortOrder]]
     };
     if (gender) query.include[0].where = { gender };
     const casts = await FilmCharacter.findAll(query);
     const formattedCasts = casts.map((cast) => cast.Character);
     return formattedCasts;
   } catch (error) {
-    console.log(error.message);
+    throw error;
   }
 };
 
@@ -52,7 +54,7 @@ export const getAMovie = async (id) => {
     const film = await Film.findByPk(id);
     return film;
   } catch (error) {
-    console.log(error.message);
+    throw error;
   }
 };
 
@@ -61,7 +63,7 @@ export const createAComment = async (data) => {
     const comment = await Comment.create(data);
     return comment;
   } catch (error) {
-    console.log(error.message);
+    throw error;
   }
 };
 
@@ -74,6 +76,6 @@ export const getCommentsByFilmId = async (id) => {
     });
     return comment;
   } catch (error) {
-    console.log(error.message);
+    throw error;
   }
 };
