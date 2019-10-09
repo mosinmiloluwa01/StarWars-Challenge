@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   res.status(200).send(`<h1>Welcome To StarWars Challenge</h1>
     <p>StarWars - A web application that fetches starwars movies from an external API.</p>
     <h4>Please use PostMan and navigate to <code>/api/v1</code> to use the app</h4>
-    <h4>Also, if you would like to create comments for any movie, please make a <code>POST</code> request to <code>/api/v1/comments/movieId</code>, <code>movieId</code> refers to one of the following IDs</h4>
+    <h4>Also, if you would like to create comments for any movie, please make a <code>POST</code> request to <code>/api/v1/movies/:id/comments</code>, <code>id</code> refers to one of the following IDs</h4>
     <ul>
     <li>1 => A New Hope</li>
     <li>2 => Attack of the Clones</li>
