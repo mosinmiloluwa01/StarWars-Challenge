@@ -1,7 +1,7 @@
 import { displayMessage } from '<helpers>/utils';
 
 const validateCastParams = (req, res, next) => {
-  const { sortParams } = req.query;
+  const { sortParams, order } = req.query;
   const { id } = req.params;
   const errors = [];
 
@@ -10,6 +10,9 @@ const validateCastParams = (req, res, next) => {
   }
   if (sortParams && !['name', 'gender', 'height'].includes(sortParams)) {
     errors.push('sortParams should either be \'name\', \'gender\', \'height\'');
+  }
+  if (order && !['ASC', 'DESC', 'asc', 'desc'].includes(order)) {
+    errors.push('order should be one of the following: \'ASC\', \'DESC\', \'asc\', \'desc\'');
   }
   if (errors.length === 0) {
     return next();
