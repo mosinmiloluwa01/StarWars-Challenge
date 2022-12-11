@@ -42,7 +42,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-import-resolver-babel-module": "^5.1.0",
     "eslint-plugin-import": "^2.18.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "nodemon": "^1.19.2",
     "pg": "^7.12.1",
